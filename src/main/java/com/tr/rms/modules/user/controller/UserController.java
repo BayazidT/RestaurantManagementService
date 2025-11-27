@@ -1,0 +1,43 @@
+package com.tr.rms.modules.user.controller;
+
+import com.tr.rms.modules.user.dto.UserRequest;
+import com.tr.rms.modules.user.dto.UserResponse;
+import com.tr.rms.modules.user.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/users")
+public class UserController {
+
+    private final UserService userService;
+
+    @PostMapping
+    public UserResponse create(@RequestBody UserRequest request) {
+        return userService.create(request);
+    }
+
+    @GetMapping
+    public List<UserResponse> getAll() {
+        return userService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public UserResponse getById(@PathVariable UUID id) {
+        return userService.getById(id);
+    }
+
+    @PutMapping("/{id}")
+    public UserResponse update(@PathVariable UUID id, @RequestBody UserRequest request) {
+        return userService.update(id, request);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable UUID id) {
+        userService.delete(id);
+    }
+}
